@@ -1,14 +1,20 @@
-import data from "../data"
-import { useState } from "react"
+
+import { useState, useContext } from "react"
+import CartItem from "./CartItem"
+import { Context } from "../Context"
 function Menu() {
   // name: "Pizza",
   // ingredients: ["pepperoni", "mushrom", "mozarella"],
   // id: 0,
   // price: 14,
   // emoji: "🍕"
+
+
   const [itemName, setItemName] = useState("")
 
-  const itemInfo = data.map(({ name, ingredients, price, emoji, id }) => {
+  const { menu, addToCart } = useContext(Context)
+  
+  const itemInfo = menu.map(({ name, ingredients, price, emoji, id }) => {
     return (
       <div key={id} className="menu-container">
         <div className="emoji">{emoji}</div>
@@ -17,7 +23,9 @@ function Menu() {
           <p className="item-ingreidents">{ingredients}</p>
           <h5 className="item-price">{`$${price}`}</h5>
         </div>
-        <button className="item-btn">+</button>
+        <button onClick={() => {
+          addToCart(name)
+        }} className="item-btn">+</button>
       </div>
     )
   })
@@ -26,6 +34,7 @@ function Menu() {
   return (
     <>
       {itemInfo}
+      <CartItem />
     </>
   )
 }
