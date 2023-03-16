@@ -2,6 +2,8 @@
 import { useState, useContext } from "react"
 import CartItem from "./CartItem"
 import { Context } from "../Context"
+import Items from "./Items"
+
 function Menu() {
   // name: "Pizza",
   // ingredients: ["pepperoni", "mushrom", "mozarella"],
@@ -9,27 +11,14 @@ function Menu() {
   // price: 14,
   // emoji: "🍕"
 
-
-  const [itemName, setItemName] = useState("")
-
-  const { menu, addToCart } = useContext(Context)
+  const { menu } = useContext(Context)
   
-  const itemInfo = menu.map(({ name, ingredients, price, emoji, id }) => {
+  const itemInfo = menu.map((item, i) => {
+    
     return (
-      <div key={id} className="menu-container">
-        <div className="emoji">{emoji}</div>
-        <div className="item-info">
-          <h3 className="item-name">{name}</h3>
-          <p className="item-ingreidents">{ingredients}</p>
-          <h5 className="item-price">{`$${price}`}</h5>
-        </div>
-        <button onClick={() => {
-          addToCart(name)
-        }} className="item-btn">+</button>
-      </div>
+      <Items key={item.id} item={item} />
     )
   })
-
 
   return (
     <>

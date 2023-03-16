@@ -5,26 +5,42 @@ const Context = React.createContext()
 
 function ContextProvider(props) {
   const [menu, setMenu] = useState([])
-  const [addPizza, setAddPizza] = useState(false)
-  const [addHamBur, setAddHamBur] = useState(false)
-  const [addBeer, setAddBeer] = useState(false)
+  const [newCart, setNewCart] = useState([])
+  const [itemPrice, setItemPrice] = useState([])
 
   useEffect(() => {
     setMenu(data)
   }, [])
 
-  function addToCart(name) {
-    if (name === "Pizza") {
-      setAddPizza(true)
-    } else if (name === "Hamburger") {
-      setAddHamBur(true)
-    } else if (name === "Beer") {
-      setAddBeer(true)
-    }
+  function addToCart(id) {
+    menu.map(item => {
+      if (id === item.id) {
+        return setNewCart(prevItem => {
+          return [
+            ...prevItem,
+            item
+          ]
+        })
+      }
+    })
   }
 
+  function getPriceItem(id) {
+    menu.map(item => {
+      if (id === item.id) {
+        return setItemPrice(prevItem => {
+          return [
+            ...prevItem,
+            item.price
+          ]
+        })
+      }
+    })
+  }
+
+
   return (
-    <Context.Provider value={{ menu, addToCart, addPizza, addHamBur, addBeer}}>
+    <Context.Provider value={{menu, addToCart, newCart, getPriceItem, itemPrice}}>
       {props.children}
     </Context.Provider>
   )
