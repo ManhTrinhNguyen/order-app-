@@ -1,19 +1,21 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { Context } from "../Context"
 
 
 function CartItem() {
 
-  const { newCart, itemPrice } = useContext(Context)
+  const { newCart, removeFromCart, placeOrder } = useContext(Context)
+
 
 // get Total Price
   function totalPrice() {
     let total = 0
-    for (let i = 0; i < itemPrice.length; i++) {
-      total = itemPrice[i] + total
+    for (let i = 0; i < newCart.length; i++) {
+      total = newCart[i].price + total
     }
     return total
   }
+ 
 
   return (
     <>
@@ -23,7 +25,9 @@ function CartItem() {
           return (
             <div className="item-container" key={item.id}>
               <h4>{item.name}</h4>
-              <button>remove</button>
+              <button className="remove-btn" onClick={() => {
+                removeFromCart(item.id)
+              }}>remove</button>
               <span>${item.price}</span>
             </div>
           )
@@ -35,7 +39,9 @@ function CartItem() {
           </div>
    
        
-        <button className="cart-btn">Complete Order</button>
+        <button className="cart-btn" onClick={() => {
+          placeOrder()
+        }}>Complete Order</button>
       </div>
     </>
   )

@@ -4,7 +4,7 @@ import { Context } from '../Context'
 
 export default function Items(props) {
 
-  const { addToCart, newCart, getPriceItem } = useContext(Context)
+  const { addToCart, newCart } = useContext(Context)
 
 
   // Disable the Btn when it already  in the cart
@@ -18,7 +18,6 @@ export default function Items(props) {
       return false
     }
   }
-
   
   return (
       <div className="menu-container">
@@ -30,7 +29,6 @@ export default function Items(props) {
         </div>
       <button onClick={() => {
         addToCart(props.item.id)
-        getPriceItem(props.item.id)
       }} className="item-btn" disabled={disableBtn()}>+</button>
       </div>
   )
